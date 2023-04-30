@@ -6,7 +6,7 @@ const {
   addReaction,
 } = require('../../controllers/postController');
 
-// /api/posts
+// /api/thoughts
 router.route('/').get(getPosts).post(createPost);
 
 // /api/posts/:id

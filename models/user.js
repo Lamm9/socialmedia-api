@@ -1,6 +1,7 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema, model, Types } = mongoose;
 
-const UserSchema = new Schema(
+const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -26,11 +27,6 @@ const UserSchema = new Schema(
         ref: 'User',
       },
     ],
-    friendCount: {
-      type: Number,
-      default: 0,
-      value: this.friends.length,
-    },
     reactions: [
       {
         type: Schema.Types.ObjectId,
@@ -53,6 +49,11 @@ UserSchema.virtual('postCount').get(function () {
 
 UserSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
+}
+);
+
+UserSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
 }
 );
 

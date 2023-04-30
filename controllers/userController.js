@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const { User, Post } = require("../models");
 
 const getUsers = (req, res) => {
   User.find()

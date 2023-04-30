@@ -1,6 +1,7 @@
-const { Schema, Types } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema, model, Types } = mongoose;
 
-const ReactionSchema = new Schema(
+const ReactionSchema = new mongoose.Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
@@ -26,11 +27,6 @@ const ReactionSchema = new Schema(
   },
   id: false,
   }
-);
-
-ReactionSchema.virtual('reactionCount').get(function() {
-  return this.reactions.length;
-}
 );
 
 module.exports = ReactionSchema;

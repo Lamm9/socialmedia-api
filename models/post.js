@@ -1,6 +1,8 @@
-const Post = require('./post');
+const mongoose = require('mongoose');
+const { Schema, model, Types } = mongoose;
+const ReactionSchema = require('./reaction');
 
-const PostSchema = new Schema({
+const PostSchema = new mongoose.Schema({
   postText: {
     type: String,
     required: true,
@@ -14,7 +16,6 @@ const PostSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (createdAtVal) => dateFormat(createdAtVal),
   },
   reactions: [ReactionSchema],
 },
@@ -24,11 +25,6 @@ const PostSchema = new Schema({
     getters: true,
   },
   id: false,
-}
-);
-
-PostSchema.virtual('reactionCount').get(function() {
-  return this.reactions.length;
 }
 );
 
