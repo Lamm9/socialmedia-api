@@ -74,10 +74,21 @@ const addReaction = (req, res) => {
     });
 };
 
+const deleteReaction = (req, res) => {
+  Post.findById(req.params.id)
+  .then((post) => {
+    post.reactions.pull(req.params.reactionId);
+    post.save();
+    res.json(post);
+  })
+}
+
 module.exports = {
   getPosts,
   getPostById,
   createPost,
   updatePost,
+  deletePost,
   addReaction,
+  deleteReaction,
 };
