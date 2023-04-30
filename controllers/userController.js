@@ -30,7 +30,7 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-  User.getUserById(req.params.id)
+  User.findById(req.params.id)
     .then((user) =>
       !user
         ? res.status(404).json({ msg: 'User not found' })
@@ -44,7 +44,7 @@ const updateUser = (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-  User.getUserById(req.params.id)
+  User.findById(req.params.id)
     .then((user) =>
       !user
         ? res.status(404).json({ msg: 'User not found' })
@@ -58,7 +58,7 @@ const deleteUser = (req, res) => {
 };
 
 const addFriend = (req, res) => {
-  User.getUserById(req.params.id)
+  User.findById(req.params.id)
     .then((user) =>
       !user
         ? res.status(404).json({ msg: 'User not found' })
@@ -75,7 +75,7 @@ const addFriend = (req, res) => {
 };
 
 const removeFriend = (req, res) => {
-  User.getUserById(req.params.id)
+  User.findById(req.params.id)
     .then((user) =>
       !user
         ? res.status(404).res.json({ msg: 'User not found' })
