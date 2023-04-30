@@ -30,6 +30,34 @@ const createPost = (req, res) => {
     });
 };
 
+const updatePost = (req, res) => {
+  Post.findByIdAndUpdate(
+    req.params.id,
+    { $set: req.body },
+    { new: true, runValidators: true },
+  )
+  .then((post) =>
+    !post
+    ? res.status(404).json({ msg: "Post not found" })
+    : res.json(post))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+};
+
+const deletePost = (req, res) => {
+  Post.findByIdAndDelete(req.params.id)
+    .then((post) =>
+      !post
+      ? res.status(404).json({ msg: "Post not found" })
+      : res.json(post))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+};
+
 const addReaction = (req, res) => {
   Post.findByIdAndUpdate(
     req.params.id,
@@ -50,5 +78,6 @@ module.exports = {
   getPosts,
   getPostById,
   createPost,
+  updatePost,
   addReaction,
 };
