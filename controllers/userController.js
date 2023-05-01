@@ -58,16 +58,12 @@ const deleteUser = (req, res) => {
 };
 
 const addFriend = (req, res) => {
-  User.findById(req.params.id)
-    .then((user) =>
-      !user
-        ? res.status(404).json({ msg: 'User not found' })
-        : User.updateOne(
-            { _id: req.params.id },
-            { $push: { friends: req.body } },
-          ),
-    )
-    .then((user) => res.json(user))
+  User.findOneAndUpdate(
+    { id: req.params.id },
+    { $addToSet: { friendId: req.body } },
+    { new: true, runValidators: true },
+  )
+    .then((user) => res.status(200).json(user))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -75,15 +71,12 @@ const addFriend = (req, res) => {
 };
 
 const removeFriend = (req, res) => {
-  User.findById(req.params.id)
-    .then((user) =>
-      !user
-        ? res.status(404).res.json({ msg: 'User not found' })
-        : User.updateOne(
-            { _id: req.params.id },
-            { $pull: { friends: req.body } },
-          ),
-    )
+  User.findOneAndUpdate(
+    { id: req.params.id },
+    { $addToSet: { friendId: req.body } },
+    { new: true },
+  )
+    .then((user) => res.status(200).json(user))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
