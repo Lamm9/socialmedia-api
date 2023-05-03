@@ -61,7 +61,7 @@ const deletePost = (req, res) => {
 const addReaction = (req, res) => {
   Post.findByIdAndUpdate(
     req.params.id,
-    { $push: { reactions: req.body } },
+    { $addToSet: { reactions: req.body } },
     { new: true, runValidators: true }
   )
     .then((post) =>
@@ -75,9 +75,11 @@ const addReaction = (req, res) => {
 };
 
 const deleteReaction = (req, res) => {
-  Post.findById(req.params.id)
+  Post.findByIdAndUpdate(req.params.id,
+    { $pull: { reactions: { reactionId: req.params.reactionId } } },
+    { new: true, runValidators: true }
+  )
   .then((post) => {
-    post.reactions.pull(req.params.reactionId);
     post.save();
     res.json(post);
   })
